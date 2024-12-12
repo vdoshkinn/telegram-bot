@@ -16,7 +16,7 @@ func DefaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
 		return
 	}
 
-	common.SetReaction(ctx, b, update)
+	common.SetReaction(ctx, b, update.Message.ID, update.Message.Chat.ID)
 	common.SendMessageToAdminChannel(ctx, b, update, update.Message.Text)
 	common.ResendPhoto(ctx, b, common.AdminChatId, update)
 	common.ResendDocument(ctx, b, common.AdminChatId, update)
@@ -27,7 +27,10 @@ func replyFromAdminChat(ctx context.Context, b *bot.Bot, update *models.Update) 
 		firstLine := strings.Split(update.Message.ReplyToMessage.Text, "\n")[0]
 		chatID := strings.Split(firstLine, ":")[1]
 		chatIDint, _ := strconv.Atoi(chatID)
-		common.SendMessageToChannel(ctx, b, chatIDint, update.Message.Text)
+		_, err := common.SendMessageToChannel(ctx, b, chatIDint, update.Message.Text)
+		if err == nil {
+			common.SetReaction(ctx, b, update.Message.ID, update.Message.Chat.ID)
+		}
 		common.ResendPhoto(ctx, b, chatIDint, update)
 		common.ResendDocument(ctx, b, chatIDint, update)
 	}

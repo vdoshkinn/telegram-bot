@@ -10,7 +10,7 @@ import (
 
 func MyWifiHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
 	text := "Название сети: HappyElephant\n" +
-		"Пароль: Appartements137"
+		"Пароль: HappyElephant137"
 	common.SendMessage(ctx, b, update, text)
 
 	common.SendPhoto(ctx, b, update, "qr_wifi.jpg")

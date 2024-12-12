@@ -19,13 +19,14 @@ func SendMessage(ctx context.Context, b *bot.Bot, update *models.Update, text st
 	DefaultLogging(message, err)
 }
 
-func SendMessageToChannel(ctx context.Context, b *bot.Bot, channelId int, text string) {
+func SendMessageToChannel(ctx context.Context, b *bot.Bot, channelId int, text string) (*models.Message, error) {
 	message, err := b.SendMessage(ctx, &bot.SendMessageParams{
 		ChatID:    channelId,
 		Text:      text,
 		ParseMode: models.ParseModeMarkdownV1,
 	})
 	DefaultLogging(message, err)
+	return message, err
 }
 
 func SendMessageWithReply(ctx context.Context, b *bot.Bot, update *models.Update, text string, kb *models.InlineKeyboardMarkup) {
@@ -85,10 +86,10 @@ func ResendDocument(ctx context.Context, b *bot.Bot, chatId int, update *models.
 	}
 }
 
-func SetReaction(ctx context.Context, b *bot.Bot, update *models.Update) {
+func SetReaction(ctx context.Context, b *bot.Bot, messageId int, chatId int64) {
 	reaction, err := b.SetMessageReaction(ctx, &bot.SetMessageReactionParams{
-		ChatID:    update.Message.Chat.ID,
-		MessageID: update.Message.ID,
+		ChatID:    chatId,
+		MessageID: messageId,
 		Reaction: []models.ReactionType{
 			{
 				Type: models.ReactionTypeTypeEmoji,

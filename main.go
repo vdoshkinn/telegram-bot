@@ -27,12 +27,14 @@ func main() {
 	}
 
 	b.RegisterHandler(bot.HandlerTypeMessageText, "/info", bot.MatchTypePrefix, handler.MyInfoHandler)
+	b.RegisterHandler(bot.HandlerTypeMessageText, "/start", bot.MatchTypePrefix, handler.StartHandler)
 	b.RegisterHandler(bot.HandlerTypeMessageText, "/wifi", bot.MatchTypePrefix, handler.MyWifiHandler)
 	b.RegisterHandler(bot.HandlerTypeMessageText, "/contacts", bot.MatchTypePrefix, handler.MyContactsHandler)
 	b.RegisterHandler(bot.HandlerTypeMessageText, "/rules", bot.MatchTypePrefix, handler.MyRulesHandler)
 	b.RegisterHandler(bot.HandlerTypeMessageText, "/notify", bot.MatchTypePrefix, handler.NotifyHandler)
 	b.RegisterHandler(bot.HandlerTypeMessageText, "/document", bot.MatchTypePrefix, handler.RequestDocumentHandler)
 	b.RegisterHandler(bot.HandlerTypeMessageText, "/checkout", bot.MatchTypePrefix, handler.CheckoutHandler)
+	b.RegisterHandler(bot.HandlerTypeMessageText, "/features", bot.MatchTypePrefix, handler.FeaturesHandler)
 
 	log.Println("Bot is now running.  Press CTRL-C to exit.")
 	b.Start(ctx)
