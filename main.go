@@ -35,6 +35,7 @@ func main() {
 	b.RegisterHandler(bot.HandlerTypeMessageText, "/document", bot.MatchTypePrefix, handler.RequestDocumentHandler)
 	b.RegisterHandler(bot.HandlerTypeMessageText, "/checkout", bot.MatchTypePrefix, handler.CheckoutHandler)
 	b.RegisterHandler(bot.HandlerTypeMessageText, "/features", bot.MatchTypePrefix, handler.FeaturesHandler)
+	b.RegisterHandler(bot.HandlerTypeMessageText, "/pin", bot.MatchTypePrefix, handler.MyPinHandler)
 
 	log.Println("Bot is now running.  Press CTRL-C to exit.")
 	b.Start(ctx)
