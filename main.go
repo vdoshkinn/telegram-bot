@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"telegram-bot/common"
 	"telegram-bot/handler"
 
 	"github.com/go-telegram/bot"
@@ -26,7 +27,8 @@ func main() {
 		panic(err)
 	}
 
-	b.RegisterHandler(bot.HandlerTypeMessageText, "/info", bot.MatchTypePrefix, handler.MyInfoHandler)
+	service := common.NewPermissionsService(0)
+	b.RegisterHandler(bot.HandlerTypeMessageText, "/info", bot.MatchTypePrefix, handler.MyInfoHandler, service.CheckUserIsAcceptable)
 	b.RegisterHandler(bot.HandlerTypeMessageText, "/start", bot.MatchTypePrefix, handler.StartHandler)
 	b.RegisterHandler(bot.HandlerTypeMessageText, "/wifi", bot.MatchTypePrefix, handler.MyWifiHandler)
 	b.RegisterHandler(bot.HandlerTypeMessageText, "/contacts", bot.MatchTypePrefix, handler.MyContactsHandler)
@@ -36,6 +38,9 @@ func main() {
 	b.RegisterHandler(bot.HandlerTypeMessageText, "/checkout", bot.MatchTypePrefix, handler.CheckoutHandler)
 	b.RegisterHandler(bot.HandlerTypeMessageText, "/features", bot.MatchTypePrefix, handler.FeaturesHandler)
 	b.RegisterHandler(bot.HandlerTypeMessageText, "/pin", bot.MatchTypePrefix, handler.MyPinHandler)
+	b.RegisterHandler(bot.HandlerTypeMessageText, "/add", bot.MatchTypePrefix, common.EmptyHandler, service.AddUser)
+	b.RegisterHandler(bot.HandlerTypeMessageText, "/remove", bot.MatchTypePrefix, common.EmptyHandler, service.RemoveAllUsers)
+	b.RegisterHandler(bot.HandlerTypeMessageText, "/admin", bot.MatchTypePrefix, handler.AdminHandler)
 
 	log.Println("Bot is now running.  Press CTRL-C to exit.")
 	b.Start(ctx)

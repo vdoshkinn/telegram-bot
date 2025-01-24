@@ -56,6 +56,15 @@ func SendMessageToAdminChannel(ctx context.Context, b *bot.Bot, update *models.U
 	DefaultLogging(message, err)
 }
 
+func SendTextToAdminChannel(ctx context.Context, b *bot.Bot, text string) {
+	message, err := b.SendMessage(ctx, &bot.SendMessageParams{
+		ChatID:    AdminChatId,
+		Text:      text,
+		ParseMode: models.ParseModeMarkdownV1,
+	})
+	DefaultLogging(message, err)
+}
+
 func ResendPhoto(ctx context.Context, b *bot.Bot, chatId int, update *models.Update) {
 	if len(update.Message.Photo) > 0 {
 		file, _ := b.GetFile(ctx, &bot.GetFileParams{
