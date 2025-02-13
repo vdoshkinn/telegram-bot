@@ -19,7 +19,7 @@ func MyInfoHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
 		"Дверь квартиры находится сразу слева от двери с лифтовой площадки(см. фото)\n" +
 		"Для входа в квартиру надо ввести в сейф-ключницу пароль: " + GetPin() + "\n" +
 		"Дверь закрыта на нижний замок.\n" +
-		"[Яндекс Карты](https://yandex.ru/maps/?text=60.057381,30.420386&si=3h9ruujf03v9rver9hh6v3atdm) \n" +
+		"[Яндекс Карты](https://yandex.ru/maps/-/CHqKZKLi) \n" +
 		"[2Гис](https://2gis.ru/spb/geo/5348660212853014/30.439654%2C60.054387/entranceId/70030076187672376?m=30.439938%2C60.054317%2F19.03)"
 	common.SendMessage(ctx, b, update, text)
 	common.SendPhoto(ctx, b, update, "door.jpeg")

@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/signal"
 	"telegram-bot/common"
+	"telegram-bot/cron"
 	"telegram-bot/handler"
 
 	"github.com/go-telegram/bot"
@@ -43,6 +44,8 @@ func main() {
 	b.RegisterHandler(bot.HandlerTypeMessageText, "/admin", bot.MatchTypePrefix, handler.AdminHandler)
 
 	log.Println("Bot is now running.  Press CTRL-C to exit.")
+
+	go cron.RunCron(ctx, b)
 	b.Start(ctx)
 
 }
