@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"os"
 	"os/signal"
@@ -18,12 +19,24 @@ func main() {
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer cancel()
 
+	var err error
+	defer func() {
+		if panicErr := recover(); panicErr != nil {
+			log.Println(fmt.Sprintf("Panic occured %v", panicErr))
+		}
+
+		if err != nil {
+			log.Println(fmt.Sprintf("Error occured %v", err))
+		}
+	}()
+
 	opts := []bot.Option{
 		bot.WithDefaultHandler(handler.DefaultHandler),
 		bot.WithCallbackQueryDataHandler("bank", bot.MatchTypePrefix, handler.CallbackHandler),
 	}
 
-	b, err := bot.New("7859184648:AAG2M5oKfrY7pALwxK7D_88lCCdAAPphQ2c", opts...)
+	var b *bot.Bot
+	b, err = bot.New("7859184648:AAG2M5oKfrY7pALwxK7D_88lCCdAAPphQ2c", opts...)
 	if err != nil {
 		panic(err)
 	}
