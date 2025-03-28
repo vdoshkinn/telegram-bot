@@ -26,11 +26,20 @@ func GetPin() string {
 	return common.ReadStringFromFile(path)
 }
 
-func SavePin(pin string) error {
-	re := regexp.MustCompile("[0-9]+")
-	pinDigits := re.FindAllString(pin, -1)
-	if len(pinDigits) < 1 && len(pinDigits[0]) != 4 {
-		return errors.New("invalid length for pin")
+func SavePin(command string) error {
+	digits, err := parseDigits(command)
+	if err != nil {
+		return err
 	}
-	return common.SaveStringToFile(path, pin)
+
+	return common.SaveStringToFile(path, digits)
+}
+
+func parseDigits(command string) (string, error) {
+	res := regexp.MustCompile("[0-9]+")
+	pinDigits := res.FindAllString(command, -1)
+	if len(pinDigits) < 1 && len(pinDigits[0]) != 4 {
+		return "", errors.New("invalid length for command")
+	}
+	return pinDigits[0], nil
 }

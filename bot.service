@@ -7,13 +7,9 @@ Type=simple
 User=nvvdoshkin
 Group=nvvdoshkin
 WorkingDirectory=/home/nvvdoshkin/telegram-bot
-ExecStart=/home/nvvdoshkin/telegram-bot
+ExecStart=/home/linuxbrew/.linuxbrew/bin/go run /home/nvvdoshkin/telegram-bot/main.go
 Restart=always
 RestartSec=5
-
-StandardOutput=append:/log/bot.log
-StandardError=append:/log/bot-error.log
-
 
 [Install]
 WantedBy=multi-user.target
