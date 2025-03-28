@@ -1,0 +1,9 @@
+# Игнорировать все .txt файлы в корне проекта
+pin.txt
+users.txt
+
+# Файлы IDE GoLand
+.idea/
+*.iml
+*.iws
+*.ipr
